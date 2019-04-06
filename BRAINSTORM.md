@@ -23,3 +23,7 @@
     - Rough Breakdown of Tasks 
         - TODO List
         - Assigned Tasks?
+
+# APIs
+* open source maps: https://leafletjs.com/
+* https://developer.spotify.com/documentation/web-api/
