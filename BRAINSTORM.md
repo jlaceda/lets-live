@@ -23,3 +23,13 @@
     - Rough Breakdown of Tasks 
         - TODO List
         - Assigned Tasks?
+
+# APIs
+* open source maps: https://leafletjs.com/
+* https://developer.spotify.com/documentation/web-api/
+
+# Ideas
+* nearest show app
+    - user inputs an artist and gets the nearest next show
+    - user gets the nearest show and has spotify gets the artist in the show
+    
