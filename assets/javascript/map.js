@@ -16,9 +16,7 @@ $(document).ready(function () {
             yourLocation = L.marker(latlng).addTo(mapDisplay);
             console.log(latlng);
 
-            return [latlng.lat, latlng.lng];
-
-            // mymap.flyTo(latlng, 16);
+            mapDisplay.flyTo(latlng, 16);
         });
     }
 
