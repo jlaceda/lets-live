@@ -1,6 +1,7 @@
 "use strict";
-// nearestShows.get() returns a Promise of arrayOfShows
-let nearestShows = (() =>
+
+/** This function returns an arrayOfShows from the Metro Area of given lat, lng*/
+const getNearestShows = (() =>
 {
 	// using api.jsonbin.io for testing before we have a songkick api key
 	const TEST_LOCATION_SEARCH_URL = "https://api.jsonbin.io/b/5cae644d814711458b3f5717";
@@ -15,10 +16,7 @@ let nearestShows = (() =>
 		{
 			return rawResponse.json();
 		}
-		else
-		{
-			throw new Error("Something went wrong on api server!");
-		}
+		throw new Error("Something went wrong on api server!");
 	};
 
 	const getMetroAreaIdFromResponse = (response) =>
@@ -29,13 +27,10 @@ let nearestShows = (() =>
 			// only take the first localtion
 			return response.resultsPage.results.location[0].metroArea.id;
 		}
-		else
-		{
-			throw new Error("Error response from songkick response");
-		}
+		throw new Error("Error response from songkick response");
 	};
 
-	const getShows = (metroAreaId) =>
+	const getShowsInArea = (metroAreaId) =>
 	{
 		// uncomment when we have a songkick api key
 		//const metroAreaQueryUrl = `https://api.songkick.com/api/3.0/metro_areas/${metroAreaId}/calendar.json?apikey=${SONGKICK_API_KEY}`;
@@ -45,7 +40,6 @@ let nearestShows = (() =>
 		return fetch(metroAreaRequest)
 			// handle non-200 status
 			.then(filterRawResponse)
-			.then(makeShowsArrayFromResponse)
 			.catch(error => console.error(error));
 	};
 
@@ -71,16 +65,13 @@ let nearestShows = (() =>
 				resolve(arrayOfShows);
 			});
 		}
-		else
-		{
-			throw new Error("Non OK status from songkick response");
-		}
+		throw new Error("Non OK status from songkick response");
 	};
 
 	// long function that takes in (lat,lng)
 	// hits locations api for the metroAreaId
 	// then hits metro_areas api
-	const get = (lat,lng) =>
+	return (lat,lng) =>
 	{
 		// uncomment when we have a songkick api key
 		//const locationQueryUrl = `https://api.songkick.com/api/3.0/search/locations.json?location=geo:${lat},${lng}&apikey=${SONGKICK_API_KEY}`;
@@ -93,16 +84,13 @@ let nearestShows = (() =>
 			// return metroAreaId
 			.then(getMetroAreaIdFromResponse)
 			// hit metro_areas api for shows
-			.then(getShows)
+			.then(getShowsInArea)
+			.then(makeShowsArrayFromResponse)
 			.catch(error => console.error(error));
 	};
-
-	// expose get(lat,lng);
-	return { get: get};
-
 })();
 
 // USAGE EXAMPLE with fake lat lng
-nearestShows.get(30,30)
+getNearestShows(30,30)
 	.then(shows => console.log(shows))
 	.catch(error => console.error(error));
