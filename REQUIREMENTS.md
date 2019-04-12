@@ -1,5 +1,8 @@
 # Coding Requirements
 - [ ] Must use at least two APIs
+    * Song Kick - to get information about venues and artists
+    * OpenCage Data - to get location data (lat/lon) from a venue name
+    * Leaflet - to display the map in the browser
 - [ ] Must use AJAX to pull data
 - [ ] Must utilize at least one new library or technology that we haven’t discussed
     - this is come up naturaly based on features required
