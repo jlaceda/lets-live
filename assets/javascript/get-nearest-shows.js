@@ -54,6 +54,11 @@ const getNearestShows = (() =>
 			.then(filterRawResponse)
 			.then((response) => 
 			{
+				if (response.page.totalElements == 0)
+				{
+					// what TODO when theres no shows?
+					throw new Error("No shows near you!");
+				}
 				const events = response._embedded.events;
 				let shows = [];
 				events.forEach(event =>
