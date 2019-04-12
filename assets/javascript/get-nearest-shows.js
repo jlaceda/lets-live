@@ -1,14 +1,9 @@
 "use strict";
 
-/** This function returns an arrayOfShows from the Metro Area of given lat, lng*/
+/** This function returns an array of shows from the area of given lat, lng */
 const getNearestShows = (() =>
 {
-	// using api.jsonbin.io for testing before we have a songkick api key
-	const TEST_LOCATION_SEARCH_URL = "https://api.jsonbin.io/b/5cae644d814711458b3f5717";
-	const TEST_METRO_AREA_URL = "https://api.jsonbin.io/b/5cae63ad1a3c794543f8a16e/2";
-	const TEST_JSONBIN_IO_SECRET_HEADER = new Headers({'secret-key': '$2a$10$yfjblcaxkd4ld8O0rI0mResVAAvw7/wQ8icwRdYxH2SIO68xPSfiq'});
-	// uncomment when we have a songkick api key
-	//const SONGKICK_API_KEY = "PLACEHOLDER_FOR_WHEN_WE_GET_IT";
+	const TICKETMASTER_API_KEY = `iYNITBvIAGCRrEmnvVY1ugT1EPxdLE4l`;
 
 	const filterRawResponse = (rawResponse) =>
 	{
@@ -19,73 +14,61 @@ const getNearestShows = (() =>
 		throw new Error("Something went wrong on api server!");
 	};
 
-	const getMetroAreaIdFromResponse = (response) =>
+	const buildlocalStartDateTimeString = () =>
 	{
-		if (response.resultsPage.status === "ok")
-		{
-			// get the metroAreaId
-			// only take the first localtion
-			return response.resultsPage.results.location[0].metroArea.id;
-		}
-		throw new Error("Error response from songkick response");
+		// goal: 
+		//		2019-04-11T00:00:00,2019-04-12T00:00:00
+		// or use wildcard:
+		//		*,2019-04-12T00:00:00
+		//
+		// TODO: this has problems at the end of months/years,
+		// probably should bring in moment.js for this
+		const now = new Date();
+
+		let year = now.getFullYear();
+		let day = now.getDate() + 1;
+		let month = now.getMonth() + 1;
+
+		day = (day < 10) ? "0" + day : day;
+		month = (month < 10) ? "0" + month : month;
+
+		return `*,${year}-${month}-${day}T00:00:00`;
 	};
 
-	const getShowsInArea = (metroAreaId) =>
-	{
-		// uncomment when we have a songkick api key
-		//const metroAreaQueryUrl = `https://api.songkick.com/api/3.0/metro_areas/${metroAreaId}/calendar.json?apikey=${SONGKICK_API_KEY}`;
-		//const metroAreaRequest = new Request(metroAreaQueryUrl);
-		const metroAreaRequest = new Request(TEST_METRO_AREA_URL, {headers: TEST_JSONBIN_IO_SECRET_HEADER});
-
-		return fetch(metroAreaRequest)
-			// handle non-200 status
-			.then(filterRawResponse)
-			.catch(error => console.error(error));
-	};
-
-	const makeShowsArrayFromResponse = (response) =>
-	{
-		if (response.resultsPage.status === "ok")
-		{
-			const eventArray = response.resultsPage.results.event;
-			let arrayOfShows = []
-			eventArray.forEach(event =>
-			{
-				arrayOfShows.push({
-					name: event.venue.displayName,
-					lng: event.venue.lng,
-					lat: event.venue.lat,
-					time: event.start.time,
-					date: event.start.date,
-					artist: event.performance[0].displayName
-				})
-			});
-			return new Promise((resolve) =>
-			{
-				resolve(arrayOfShows);
-			});
-		}
-		throw new Error("Non OK status from songkick response");
-	};
-
-	// long function that takes in (lat,lng)
-	// hits locations api for the metroAreaId
-	// then hits metro_areas api
 	return (lat,lng) =>
 	{
-		// uncomment when we have a songkick api key
-		//const locationQueryUrl = `https://api.songkick.com/api/3.0/search/locations.json?location=geo:${lat},${lng}&apikey=${SONGKICK_API_KEY}`;
-		//const locationSearchRequest = new Request(locationQueryUrl);
-		const locationSearchRequest = new Request(TEST_LOCATION_SEARCH_URL, {headers: TEST_JSONBIN_IO_SECRET_HEADER});
-		
-		return fetch(locationSearchRequest)
+		const eventSearchRequestUrl = [
+			`https://app.ticketmaster.com/discovery/v2/events?apikey=${TICKETMASTER_API_KEY}`,
+			`latlong=${lat},${lng}`,
+			`radius=5`, // TODO: maybe make radius a parameter?
+			`localStartDateTime=${buildlocalStartDateTimeString()}`,
+			`unit=miles`,
+			`sort=date,asc`,
+			`countryCode=US`,
+			`segmentName=Music`].join('&');
+
+		const eventSearchRequest = new Request(eventSearchRequestUrl);
+
+		return fetch(eventSearchRequest)
 			// handle non-200 status
 			.then(filterRawResponse)
-			// return metroAreaId
-			.then(getMetroAreaIdFromResponse)
-			// hit metro_areas api for shows
-			.then(getShowsInArea)
-			.then(makeShowsArrayFromResponse)
+			.then((response) => 
+			{
+				const events = response._embedded.events;
+				let shows = [];
+				events.forEach(event =>
+				{
+					shows.push({
+						name: event._embedded.venues[0].name,
+						lng: event._embedded.venues[0].location.longitude,
+						lat: event._embedded.venues[0].location.latitude,
+						time: event.dates.start.localTime,
+						date: event.dates.start.localDate,
+						artist: event._embedded.attractions[0].name
+					});
+				});
+				return new Promise(resolve => resolve(shows))
+			})
 			.catch(error => console.error(error));
 	};
 })();
