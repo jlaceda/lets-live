@@ -40,7 +40,7 @@ const getNearestShows = (() =>
 		const eventSearchRequestUrl = [
 			`https://app.ticketmaster.com/discovery/v2/events?apikey=${TICKETMASTER_API_KEY}`,
 			`latlong=${lat},${lng}`,
-			`radius=5`, // TODO: maybe make radius a parameter?
+			`radius=10`, // TODO: maybe make radius a parameter?
 			`localStartDateTime=${buildlocalStartDateTimeString()}`,
 			`unit=miles`,
 			`sort=date,asc`,
