@@ -5,7 +5,7 @@ const getNearestShows = (() =>
 {
 	// using api.jsonbin.io for testing before we have a songkick api key
 	const TEST_LOCATION_SEARCH_URL = "https://api.jsonbin.io/b/5cae644d814711458b3f5717";
-	const TEST_METRO_AREA_URL = "https://api.jsonbin.io/b/5cae63ad1a3c794543f8a16e";
+	const TEST_METRO_AREA_URL = "https://api.jsonbin.io/b/5cae63ad1a3c794543f8a16e/2";
 	const TEST_JSONBIN_IO_SECRET_HEADER = new Headers({'secret-key': '$2a$10$yfjblcaxkd4ld8O0rI0mResVAAvw7/wQ8icwRdYxH2SIO68xPSfiq'});
 	// uncomment when we have a songkick api key
 	//const SONGKICK_API_KEY = "PLACEHOLDER_FOR_WHEN_WE_GET_IT";
