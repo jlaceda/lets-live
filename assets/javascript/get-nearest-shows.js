@@ -53,8 +53,8 @@ const getNearestShows = (() =>
 			{
 				arrayOfShows.push({
 					name: event.venue.displayName,
-					lng: event.location.lng,
-					lat: event.location.lat,
+					lng: event.venue.lng,
+					lat: event.venue.lat,
 					time: event.start.time,
 					date: event.start.date,
 					artist: event.performance[0].displayName
