@@ -1,5 +1,5 @@
-"use strict";
-let firebaseModule = {
+
+var firebaseModule = {
     config : 
     {
         apiKey: "AIzaSyDlnKhpzpyOnPU0Qkp91SuIqjVLbJ6L37Q",
