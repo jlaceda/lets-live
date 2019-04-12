@@ -9,11 +9,11 @@ var favorites = {
             });
         }
 
-        this.add("add new favorite");
+/*         this.add("add new favorite");
 
         this.add("remove this fav");
         this.remove("remove this fav");
-
+ */
         this.draw();
 
     },
