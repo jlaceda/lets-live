@@ -24,6 +24,7 @@ let firebaseModule = {
         this.recentSearchRef = this.database.ref("/recentSearchs");
         this.userIDSRef = this.database.ref("/userIDS");
         this.variablesRef = this.database.ref("/vars");
+        this.addListeners();
 
         if(localStorage.getItem("UID")) //have a user id should verify that it exists on the server
         {
@@ -32,24 +33,31 @@ let firebaseModule = {
         else //user id locally doesnt exist so create a new one
         {
             let newUser = {
-                userID: this.lastUID, favorites:[1], recent:[1]
+                userID: this.lastUID, favorites:["default"], recent:["default"]
             };
             this.myID = this.lastUID;
             this.pushUser(newUser);
             localStorage.setItem("UID", this.myID);
         }
 
-        this.addListeners();
+        
     },
 
     addListeners: function()
     {
+        //update the iterator variables
         this.variablesRef.on("value", function (snapshot) {
-            console.log(snapshot.val());
             firebaseModule.lastUID = snapshot.val().lastUID;
             firebaseModule.lastSearch = snapshot.val().lastSearchNum;
         }, firebaseModule.handleErrors);
 
+        //find my object
+        this.userIDSRef.on("child_added", function (snapshot) {
+            if(snapshot.val().userID == firebaseModule.myID)
+            {
+                firebaseModule.myObj = snapshot.val();
+            }
+        }, firebaseModule.handleErrors);
     },
 
     updateVars: function()
@@ -71,9 +79,7 @@ let firebaseModule = {
 
     updateUser: function()
     {
-        this.userIDSRef.on("child_added", function (snapshot) {
-            console.log(snapshot.val());
-        }, firebaseModule.handleErrors);
+        this.database.ref("/userIDS/" + this.myID).update(myObj);
     }
     
 }
@@ -81,7 +87,7 @@ firebaseModule.init();
 
 
 //testing
-firebaseModule.updateVars();
+/* firebaseModule.updateVars();
 
 firebaseModule.pushSearch({Artist: "asdfj", isFav: false, timeout: 10000});
 firebaseModule.pushUser({userID: (firebaseModule.lastUID), favorites:["asdf"], recent:[1,2,3,4,5]});
@@ -89,3 +95,4 @@ firebaseModule.pushUser({userID: (firebaseModule.lastUID), favorites:["asdf"], r
 firebaseModule.pushSearch({Artist: "asdfj", isFav: false, timeout: 10000});
 firebaseModule.pushUser({userID: (firebaseModule.lastUID), favorites:["asdf"], recent:[1,2,3,4,5]});
 firebaseModule.updateUser();
+ */
