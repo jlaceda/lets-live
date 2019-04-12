@@ -10,8 +10,9 @@ var firebaseModule = {
         messagingSenderId: "740996231944"
     },
     database: null,
-    playersRef: null,
-    chatRef: null,
+    recentSearchRef: null,
+    userIDSRef: null,
+    variablesRef: null,
     lastSearch: 0,
     lastUID: 0,
     myID: 0,
