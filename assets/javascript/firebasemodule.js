@@ -1,4 +1,4 @@
-var favorites = {
+let favorites = {
     favArr: [],
     init: function()
     {
@@ -61,7 +61,7 @@ var favorites = {
     
 };
 
-var firebaseModule = {
+let firebaseModule = {
     config: 
     {
         apiKey: "AIzaSyDlnKhpzpyOnPU0Qkp91SuIqjVLbJ6L37Q",
@@ -97,9 +97,24 @@ var firebaseModule = {
 
     initUser: function()
     {
-        if(localStorage.getItem("UID")) //have a user id should verify that it exists on the server
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i = 0; i < ca.length; i++) {
+              var c = ca[i];
+              while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+              }
+              if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+              }
+            }
+            return "";
+          }
+
+        if(getCookie("UID") != "") //have a user id should verify that it exists on the server
         {
-            firebaseModule.myID = localStorage.getItem("UID");
+            firebaseModule.myID = getCookie("UID");
         }
         else //user id locally doesnt exist so create a new one
         {
@@ -108,7 +123,7 @@ var firebaseModule = {
             };
             firebaseModule.myID = firebaseModule.lastUID;
             firebaseModule.pushUser(newUser);
-            localStorage.setItem("UID", firebaseModule.myID);
+            document.cookie = "UID=" + firebaseModule.myID;
         }
 
         favorites.init();
