@@ -7,18 +7,16 @@ html,
 body {
     width: 100%;
     height: 100%;
-    overflow: scroll;
+    overflow: auto;
     font-family: 'Ubuntu', sans-serif;
 }
 #main_content {
     z-index: 2;
     position: relative;
-    overflow: auto;
 }
 
 /* background */
 #container {
-    overflow: hidden;
     position: absolute;
     top: 0;
     left: 0;
