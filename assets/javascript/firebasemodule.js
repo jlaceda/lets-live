@@ -2,7 +2,7 @@ var favorites = {
     favArr: [],
     init: function()
     {
-        if(firebaseModule.myObj.favorites)
+        if(firebaseModule.myObj && firebaseModule.myObj.favorites)
         {
             firebaseModule.myObj.favorites.forEach(fav => {
                 this.add(fav);
