@@ -3,7 +3,7 @@
 // Map object
 let map = {
     // Current poistion with lat and lng coords
-    currentPosition: {},
+    currentPosition: {lat: 45},
 
     // Map display object
     display: L.map("map").setView([47.6062, -122.3321], 13),
@@ -22,13 +22,17 @@ let map = {
     createCurrPosMarker: function() {
         navigator.geolocation.getCurrentPosition(function(location) {
             // Get lat and lng of current position
+            
             map.currentPosition = new L.LatLng(location.coords.latitude, location.coords.longitude);
+            console.log(map.currentPosition);
     
             // Add marker to map display
             L.marker(map.currentPosition).addTo(map.display);
     
             // Fly and zoom to marker
             map.display.flyTo(map.currentPosition, 16);
+
+            getNearestShows(map.currentPosition.lat, map.currentPosition.lng).then(map.createVenueMarkers);
 
         });
     },
@@ -41,6 +45,7 @@ let map = {
             let popup = venues[i].name + "<br>" +
                         venues[i].artist + "<br>" +
                         venues[i].date + "<br>" +
+                        venues[i].time + "<br>";
             venueMarker.bindPopup(popup);
         }
     }
@@ -49,6 +54,3 @@ let map = {
 
 map.addTileLayer();
 map.createCurrPosMarker();
-
-// Test for creating venue markers around current position
-getNearestShows(map.currentPosition).then(map.createVenueMarkers);
