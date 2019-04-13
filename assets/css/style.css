@@ -74,7 +74,7 @@ input{
 .dropdown-content {
     display: none;
     position: absolute;
-    background:hsla(0, 0%, 20%, 0.5);
+    background:hsla(0, 0%, 20%, 0.75);
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
@@ -106,12 +106,45 @@ input{
     margin-top:5%;
 }
 #map ,#list{
-    border: 1px solid white;
     width:700px;
     height:500px;
     margin: 5%;
     margin-left: 20%;
     color: white;
     background: hsla(0, 0%, 20%, 0.5);
-    padding:2%;
+}
+
+/* media query */
+@media screen and (max-width : 990px) {
+    .navbar-toggler-icon {
+     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+    }
+     #navbarSupportedContent{
+        margin-left: 0%;
+        }
+        .form-control{ 
+        width:200px;
+        }
+        .dropdown{
+            margin-right:13%;
+            margin-left:2%;
+        }
+        input{
+             margin-left:5%;
+        }
+}  
+
+@media screen and (max-width : 768px) {
+    #map ,#list{
+        margin-left: 5%;
+        width:600px;
+    }
+}
+
+@media screen and (max-width : 375px) {
+    #map ,#list{
+        margin-left: 2%;
+        width: 330px;
+        height:300px;
+    }
 }
