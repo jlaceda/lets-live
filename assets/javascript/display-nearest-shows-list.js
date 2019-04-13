@@ -24,7 +24,9 @@ const displayNearestShowsList = () =>
 	navigator.geolocation.getCurrentPosition(
 		// success callback
 		position =>
-			getNearestShows(position.coords.latitude,position.coords.longitude)
+			//getNearestShows(position.coords.latitude,position.coords.longitude)
+			// use test values for now
+			getNearestShows(47.6114813,-122.3373179)
 				.then(processShowObjects)
 				.catch(error => console.error(error))
 		,
