@@ -2,8 +2,7 @@
 
 // Map object
 let map = {
-    // Current poistion with lat and lng coords
-    currentPosition: {lat: 45},
+ 
 
     // Map display object
     display: L.map("map").setView([47.6062, -122.3321], 13),
@@ -19,22 +18,22 @@ let map = {
     },
 
     // Create the marker for the current position and zoom to it
-    createCurrPosMarker: function() {
-        navigator.geolocation.getCurrentPosition(function(location) {
-            // Get lat and lng of current position
-            
-            map.currentPosition = new L.LatLng(location.coords.latitude, location.coords.longitude);
-            console.log(map.currentPosition);
-    
-            // Add marker to map display
-            L.marker(map.currentPosition).addTo(map.display);
-    
-            // Fly and zoom to marker
-            map.display.flyTo(map.currentPosition, 16);
+    createCurrPosMarker: function(location) {
+        
+        // Get lat and lng of current position
+        
+        let currentPosition = new L.LatLng(location.coords.latitude, location.coords.longitude);
+        console.log(currentPosition);
 
-            getNearestShows(map.currentPosition.lat, map.currentPosition.lng).then(map.createVenueMarkers);
+        // Add marker to map display
+        L.marker(currentPosition).addTo(map.display);
 
-        });
+        // Fly and zoom to marker
+        map.display.flyTo(currentPosition, 16);
+
+        
+
+        
     },
 
     // Create the markers for every venue
@@ -52,5 +51,5 @@ let map = {
 
 }
 
-map.addTileLayer();
-map.createCurrPosMarker();
+// map.addTileLayer();
+// map.createCurrPosMarker();
