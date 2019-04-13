@@ -22,13 +22,13 @@ let map = {
     createCurrPosMarker: function() {
         navigator.geolocation.getCurrentPosition(function(location) {
             // Get lat and lng of current position
-            let currentPosition = new L.LatLng(location.coords.latitude, location.coords.longitude);
+            map.currentPosition = new L.LatLng(location.coords.latitude, location.coords.longitude);
     
             // Add marker to map display
-            L.marker(currentPosition).addTo(map.display);
+            L.marker(map.currentPosition).addTo(map.display);
     
             // Fly and zoom to marker
-            map.display.flyTo(currentPosition, 16);
+            map.display.flyTo(map.currentPosition, 16);
 
         });
     },
@@ -38,7 +38,10 @@ let map = {
         for (let i = 0; i < venues.length; i++) {
             console.log(`lat: ${venues[i].lat}\tlng: ${venues[i].lng}`)
             let venueMarker = L.marker([venues[i].lat, venues[i].lng]).addTo(map.display);
-            venueMarker.bindPopup(venues[i].name);
+            let popup = venues[i].name + "<br>" +
+                        venues[i].artist + "<br>" +
+                        venues[i].date + "<br>" +
+            venueMarker.bindPopup(popup);
         }
     }
 
@@ -48,4 +51,4 @@ map.addTileLayer();
 map.createCurrPosMarker();
 
 // Test for creating venue markers around current position
-getNearestShows(30,30).then(map.createVenueMarkers);
+getNearestShows(map.currentPosition).then(map.createVenueMarkers);
