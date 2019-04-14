@@ -11,12 +11,19 @@
     // Resize
     resize: true,
 
+    // autoplay: false,
+    isMobile: window.matchMedia('(max-width: 768px)').matches,
+
     // Array of objects containing the src and type
     // of different video formats to add
     src: [
       {
         src: 'assets/images/background.mp4',
         type: 'video/mp4'
+      },
+      {
+        src: 'assets/images/background.webm',
+        type: 'video/webm;codecs="vp8, vorbis"'
       }
     ],
 
