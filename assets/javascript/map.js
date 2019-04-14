@@ -9,11 +9,10 @@ let map = {
 
     // Add tile layer to map display
     addTileLayer: function() {
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            maxZoom: 18,
-            id: 'mapbox.streets',
-            accessToken: 'pk.eyJ1IjoibXJnbWFjYW5kb2ciLCJhIjoiY2plMGFydTNhMGZvZjJ3cXQxMXh0czV5ZSJ9.wLEGScCuILcHiezNwPpzaw'
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
         }).addTo(this.display);
     },
 
@@ -47,7 +46,8 @@ let map = {
         for (let i = 0; i < venues.length; i++) {
             // console.log(`lat: ${venues[i].lat}\tlng: ${venues[i].lng}`)
             let venueMarker = L.marker([venues[i].lat, venues[i].lng], {icon: map.ticketIcon}).addTo(map.display);
-            
+
+            // Create popup
             let popup = venues[i].name + "<br>" +
                         venues[i].artist + "<br>" +
                         venues[i].date + "<br>" +
@@ -58,12 +58,22 @@ let map = {
             map.markerBounds.extend(venueMarker.getLatLng());
 
         }
-        map.flyToMarkers(map.markerBounds.getCenter());
+
+        // Save center of all markers
+        let markerBoundsCenter = map.markerBounds.getCenter();
+        // Fly to the center of all the markers
+        map.flyToMarkers(markerBoundsCenter);
+
+        // When the "All Venues" button is clicked
+        $("#all-venues").on("click", function() {
+            // Fly to the center of all the markers
+            map.flyToMarkers(markerBoundsCenter);
+        });
     },
 
-    // Flys to the center of all the markers
+    // Fly to the center of all the markers
     flyToMarkers: function(centerCoords) {
-        map.display.flyTo(centerCoords, 10.5);
+        map.display.flyTo(centerCoords, 10);  // The second argument should depend on
+                                              // radius when getting nearest shows
     }
-
 }
