@@ -2,8 +2,7 @@
 
 // Map object
 let map = {
-    // Current poistion with lat and lng coords
-    currentPosition: {},
+ 
 
     // Map display object
     display: L.map("map").setView([47.6062, -122.3321], 13),
@@ -19,18 +18,22 @@ let map = {
     },
 
     // Create the marker for the current position and zoom to it
-    createCurrPosMarker: function() {
-        navigator.geolocation.getCurrentPosition(function(location) {
-            // Get lat and lng of current position
-            let currentPosition = new L.LatLng(location.coords.latitude, location.coords.longitude);
-    
-            // Add marker to map display
-            L.marker(currentPosition).addTo(map.display);
-    
-            // Fly and zoom to marker
-            map.display.flyTo(currentPosition, 16);
+    createCurrPosMarker: function(location) {
+        
+        // Get lat and lng of current position
+        
+        let currentPosition = new L.LatLng(location.coords.latitude, location.coords.longitude);
+        console.log(currentPosition);
 
-        });
+        // Add marker to map display
+        L.marker(currentPosition).addTo(map.display);
+
+        // Fly and zoom to marker
+        map.display.flyTo(currentPosition, 16);
+
+        
+
+        
     },
 
     // Create the markers for every venue
@@ -38,14 +41,15 @@ let map = {
         for (let i = 0; i < venues.length; i++) {
             console.log(`lat: ${venues[i].lat}\tlng: ${venues[i].lng}`)
             let venueMarker = L.marker([venues[i].lat, venues[i].lng]).addTo(map.display);
-            venueMarker.bindPopup(venues[i].name);
+            let popup = venues[i].name + "<br>" +
+                        venues[i].artist + "<br>" +
+                        venues[i].date + "<br>" +
+                        venues[i].time + "<br>";
+            venueMarker.bindPopup(popup);
         }
     }
 
 }
 
-map.addTileLayer();
-map.createCurrPosMarker();
-
-// Test for creating venue markers around current position
-getNearestShows(30,30).then(map.createVenueMarkers);
+// map.addTileLayer();
+// map.createCurrPosMarker();
