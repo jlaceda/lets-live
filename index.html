@@ -49,20 +49,21 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <!-- trending -->
-                    <div class="dropdown">
+                    <li class="nav-item dropdown">
                         <button class="trendingBtn">Trending</button>
-                        <div id="trendingList" class="dropdown-content">
+                        <div id="trendingList" class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a href="#">Example 1</a>
                             <a href="#">Example 2</a>
                             <a href="#">Example 3</a>
                         </div>
-                    </div>
+                    </li>
 
-                <!-- favorites -->
-                <div class="dropdown">
-                    <button class="favBtn">Favorites</button>
-                    <div id="favList" class="dropdown-content">
-                    </div>
+                    <!-- favorites -->
+                    <li class="nav-item dropdown">
+                        <button class="favBtn">Favorites</button>
+                        <div id="favList" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        </div>
+                    </li>
                 </ul>
                 <!-- search -->
                 <form class="form-inline">
@@ -76,6 +77,10 @@
             <h1> <span id="pageTitle">Who's Playing Around Me?</span></h1>
             <div id="map">
                 Loading Map...
+                <div class="leaflet-top leaflet-right">
+                    <input type="button" id="all-venues" value="All Venues"
+                        class="btnStyle span3 leaflet-control btn btn-light" />
+                </div>
             </div>
             <div id="list">
                 Loading Show List...
@@ -83,38 +88,38 @@
         </div>
     </div>
 
-    <a id="down" href = "#list" ><i class="fas fa-arrow-down"></i></button>
-    <a id="up" href = "#map"><i class="fas fa-arrow-up"></i></button>
+    <a id="down" href="#list"><i class="fas fa-arrow-down"></i></button>
+        <a id="up" href="#map"><i class="fas fa-arrow-up"></i></button>
 
-    <!-- background -->
-    <script src="assets/javascript/bideo.js"></script>
-    <script src="assets/javascript/background.js"></script>
+            <!-- background -->
+            <script src="assets/javascript/bideo.js"></script>
+            <script src="assets/javascript/background.js"></script>
 
-    <!-- jquery -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- Alex is working on trending fuzzy searches-->
-    <!-- Have we decided where we will put this trending fuzzy searches at? -->
+            <!-- jquery -->
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <!-- Alex is working on trending fuzzy searches-->
+            <!-- Have we decided where we will put this trending fuzzy searches at? -->
 
-    <script src="assets/javascript/get-nearest-shows.js"></script>
-    <!-- Map JS -->
-    <script src="assets/javascript/map.js"></script>
+            <script src="assets/javascript/get-nearest-shows.js"></script>
+            <!-- Map JS -->
+            <script src="assets/javascript/map.js"></script>
 
-    <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
 
-    <script src="assets/javascript/firebasemodule.js"></script>
+            <script src="assets/javascript/firebasemodule.js"></script>
 
-    <script src="assets/javascript/display-nearest-shows-list.js"></script>
-    <script src="assets/javascript/page.js"></script>
-    <script src="assets/javascript/getCurrentPosition.js"></script>
+            <script src="assets/javascript/display-nearest-shows-list.js"></script>
+            <script src="assets/javascript/page.js"></script>
+            <script src="assets/javascript/getCurrentPosition.js"></script>
 </body>
 
 </html>
