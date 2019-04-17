@@ -5,6 +5,9 @@ let map = {
     // Bounds object
     markerBounds: new L.LatLngBounds(),
 
+    // Position marker
+    posMarker: L.circleMarker([47.6062, -122.3321]),
+
     // Array of venue markers
     venueMarkerArray: [],
 
@@ -34,14 +37,30 @@ let map = {
         let currentPosition = new L.LatLng(location.coords.latitude, location.coords.longitude);
 
         // Add marker to map display
-        let posMarker = L.circleMarker(currentPosition).addTo(map.display);
+        map.posMarker = L.circleMarker(currentPosition).addTo(map.display);
 
         // Extend the marker bounds
-        this.markerBounds.extend(posMarker.getLatLng());
+        map.markerBounds.extend(map.posMarker.getLatLng());
     },
 
     // Create the markers for every venue
     createVenueMarkers: function(venues) {
+
+
+        // Remove all venue markers
+        for (let i = 0; i < map.venueMarkerArray.length; i++) {
+            map.display.removeLayer(map.venueMarkerArray[i].venueMarker);
+        }
+
+        // Reset array of venue markers
+        map.venueMarkerArray = [];
+
+        // Reset markerBounds
+        map.markerBounds = new L.LatLngBounds();
+        console.log(map.markerBounds);
+        // Extend the marker bounds
+        map.markerBounds.extend(map.posMarker.getLatLng());
+
         // Create a marker with a popup for each venue
         for (let i = 0; i < venues.length; i++) {
             // console.log(`lat: ${venues[i].lat}\tlng: ${venues[i].lng}`)

@@ -14,7 +14,12 @@ var artistSearchMod = {
                 searchInput.attr('placeholder', 'Name Required');
                 return;
             }
-            artistSearchMod.search(artistName);
+
+            // Stores the artist response as a promise
+            let showsArrayPromise = artistSearchMod.search(artistName);
+            showsArrayPromise.then(map.createVenueMarkers);
+            showsArrayPromise.then(createShowList);
+            
             searchInput.val("");
             searchInput.attr('placeholder', 'Artist Search');
         });
