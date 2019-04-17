@@ -1,5 +1,14 @@
 "use strict";
 
+// Animated scroll to id
+const ascrollto = id =>
+{
+	let etop = $('#' + id).offset().top;
+	$('html, body').animate({
+	  scrollTop: etop
+	}, 500);
+}
+
 const createShowList = venues =>
 {
 	const showDivTemplate = show =>`
@@ -35,4 +44,23 @@ const createShowList = venues =>
 	}
 	// write html to dom
 	listDiv.innerHTML = markup;
+
+	// When a venue is clicked in the list
+	$(".venue").on("click", function() {
+		ascrollto("map");
+		
+		// Save the venue name clicked as a variable
+		let thisVenueName = $(this)[0].childNodes[1].innerText;
+
+		// Iterate over all the venue markers
+		for (let i = 0; i < map.venueMarkerArray.length; i++) {
+			// If th venue marker's venue name is the same as the venue name clicked
+			if (map.venueMarkerArray[i].venueName === thisVenueName) {
+				// Zooms to the venue
+				map.display.flyTo(map.venueMarkerArray[i].venueMarker._latlng, 15);
+				// Open the popup for the venue
+				map.venueMarkerArray[i].venueMarker.openPopup();
+			}
+		}
+	});
 };
