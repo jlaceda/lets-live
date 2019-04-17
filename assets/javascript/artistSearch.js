@@ -11,6 +11,8 @@ var artistSearchMod = {
             artistSearchMod.search($("#searchInput").val());
             $("#searchInput").val("");
         });
+
+
     },
 
     search: function (artist) {
