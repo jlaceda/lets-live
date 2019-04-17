@@ -9,31 +9,36 @@ const createShowFromEvent = (venues, event) => {
 	let venueName = event._embedded.venues[0].name;
 
 	let venue = venues.filter(venueInner => {
-		console.log(venueInner.name)
-		console.log(venueName)
-		console.log(venueInner.name === venueName)
 		return venueInner.name === venueName;
 	});
-	console.log(venue)
 	if (venue.length > 1) return;
 	let v = {};
 	if (venue.length === 0) {
 		// create a venue
 		v = {
-			name: event._embedded.venues[0].name,
-			lng: event._embedded.venues[0].location.longitude,
-			lat: event._embedded.venues[0].location.latitude,
+			name: (event._embedded.venues[0].name === undefined) ? '' : event._embedded.venues[0].name,
 			shows: []
 		};
 
-		if (event._embedded.venues[0].country.countryCode === "US") {
-			v.address = [
-				event._embedded.venues[0].address.line1,
-				event._embedded.venues[0].city.name,
-				event._embedded.venues[0].state.stateCode,
-				"US"
-			]
+		if (event._embedded.venues[0].location === undefined)
+		{
+			console.log("venue doesn't have lat long");
+			// TODO: Do a GPS look up from the address
+			// for now just 30 30
+			v.lng = 30;
+			v.lat = 30;
+		} else {
+			v.lng = event._embedded.venues[0].location.longitude;
+			v.lat = event._embedded.venues[0].location.latitude;
 		}
+
+		v.address = [
+			(event._embedded.venues[0].address === undefined) ? '' : event._embedded.venues[0].address.line1,
+			(event._embedded.venues[0].city === undefined) ? '' : event._embedded.venues[0].city.name,
+			(event._embedded.venues[0].state === undefined) ? '' : event._embedded.venues[0].state.stateCode,
+			(event._embedded.venues[0].country === undefined) ? '' : event._embedded.venues[0].country.countryCode
+		]
+		
 		venues.push(v);
 		
 	} else {
@@ -52,6 +57,4 @@ const createShowFromEvent = (venues, event) => {
 		artist: artist,
 		tmUrl: event.url
 	});
-	console.log(v);
-	
 }
