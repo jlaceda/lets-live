@@ -1,11 +1,11 @@
-let favorites = {
-    favArr: [],
+var recentSearch = {
+    recSearch: [],
     init: function()
     {
         if(firebaseModule.myObj && firebaseModule.myObj.favorites)
         {
             firebaseModule.myObj.favorites.forEach(fav => {
-                this.add(fav);
+                this.add(fav, true);
             });
         }
 
@@ -18,26 +18,39 @@ let favorites = {
 
     },
 
-    add: function(favToAdd)
+    add: function(favToAdd, reverse = false)
     {
-        if(favorites.favArr != undefined)
+        if(recentSearch.recSearch != undefined)
         {
-            this.favArr.push(favToAdd);
+            if(reverse == true)
+            {
+                this.recSearch.push(favToAdd);
+            }
+            else
+            {
+                if(this.recSearch.unshift(favToAdd) > 5)
+                {
+                    this.recSearch.pop();
+                }
+            }
+            
+            
             this.updateFirebase();
         }
         else
         {
-            this.favArr = [favToAdd];
+            this.recSearch = [favToAdd];
         }
+        this.draw();
     },
 
     remove: function(favToRemove)
     {
-        for(let i in this.favArr)
+        for(let i in this.recSearch)
         { 
-            if (this.favArr[i] === favToRemove) 
+            if (this.recSearch[i] === favToRemove) 
             {
-                this.favArr.splice(i, 1); 
+                this.recSearch.splice(i, 1); 
             }
          }
          this.updateFirebase();
@@ -46,17 +59,26 @@ let favorites = {
     draw: function()
     {
         let i = 0;
-        $("#favList").empty();
-        this.favArr.forEach(fav =>
+        $("#recList").empty();
+        this.recSearch.forEach(fav =>
         {
-            $("#favList").append("<a href=\"#\">" + i++ + ": " + fav + "</a>")
+            $("#recList").append("<a class=\"recentSearch\" value=" + fav + " href=\"#\">" + fav + "</a>")
+
         })
+        $(".recentSearch").click(function(event){
+            event.preventDefault();
+            console.log($(this));
+            artistSearchMod.search($(this).attr("value"));
+        });
     },
 
     updateFirebase: function()
     {
-        firebaseModule.myObj.favorites = this.favArr;
-        firebaseModule.updateUser();
+        if(firebaseModule.myObj)
+        {
+            firebaseModule.myObj.favorites = this.recSearch;
+            firebaseModule.updateUser();
+        }
     }
     
 };
@@ -126,7 +148,7 @@ let firebaseModule = {
             document.cookie = "UID=" + firebaseModule.myID;
         }
 
-        favorites.init();
+        recentSearch.init();
     },
 
     addListeners: function()
