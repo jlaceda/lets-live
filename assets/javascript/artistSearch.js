@@ -7,6 +7,7 @@ var artistSearchMod = {
         $("#searchButton").click(function(event){
 
             event.preventDefault();
+
             let searchInput = $("#searchInput")
             let artistName = searchInput.val().trim();
             if (artistName.length === 0)
@@ -14,7 +15,9 @@ var artistSearchMod = {
                 searchInput.attr('placeholder', 'Name Required');
                 return;
             }
-            artistSearchMod.search(artistName);
+            let venueArrayPromise = artistSearchMod.search(artistName);
+            venueArrayPromise.then(map.createVenueMarkers);
+            venueArrayPromise.then(createShowList);
             searchInput.val("");
             searchInput.attr('placeholder', 'Artist Search');
         });
@@ -48,6 +51,7 @@ var artistSearchMod = {
                 }
                 let venues = [];
                 const events = response._embedded.events;
+                console.log(events);
                 events.forEach(event => {
                     createShowFromEvent(venues, event);
                 });
