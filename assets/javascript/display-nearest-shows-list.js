@@ -1,5 +1,12 @@
 "use strict";
 
+function ascrollto(id) {
+	var etop = $('#' + id).offset().top;
+	$('html, body').animate({
+	  scrollTop: etop
+	}, 500);
+}
+
 const createShowList = venues =>
 {
 	const showDivTemplate = show =>`
@@ -35,4 +42,11 @@ const createShowList = venues =>
 	}
 	// write html to dom
 	listDiv.innerHTML = markup;
+
+	// When a venue is clicked in the list
+	$(".venue").on("click", function() {
+		ascrollto("map");
+		
+		console.log($(this)[0].childNodes[1].innerText);
+	});
 };
