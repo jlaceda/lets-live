@@ -47,39 +47,29 @@ let map = {
             // console.log(`lat: ${venues[i].lat}\tlng: ${venues[i].lng}`)
             let venueMarker = L.marker([venues[i].lat, venues[i].lng], {icon: map.ticketIcon}).addTo(map.display);
 
-            // Create popup
-            let popup = venues[i].name + "<br>" +
-                        venues[i].artist + "<br>" +
-                        venues[i].date + "<br>" +
-                        venues[i].time + "<br>";
-
-            /// TEST
+            /// popup
             const showDivTemplate = show =>`
             <li>
-                <div class="show p-2 m-1" style="background-color:rgba(0,0,0,0.5)">
-                    <h3>${show.artist}</h3> 
-                    <h5>${show.date} ${show.time}</h5>
-                    <p><a href="${show.tmUrl}" target="_blank">Tickets</a></p>
+                <div class="showPopup p-1">
+                    <h6>${show.artist}</h6> 
+                    <p>${show.displayDate}<br>
+                    ${show.displayTime}<br>
+                    <a href="${show.tmUrl}" target="_blank">Tickets</a></p>
                 </div>
             </li>
             `;
-            
-            // TODO: better markup
-            let markup = '';
+
             // construct html for list
-            
             const venue = venues[i];
-            markup += `
-            <div class="venue p-2 m-1" style="background-color:rgba(0,0,0,0.5)">
-            <h2>${venue.name}</h2>
-            <ul>
-            ${venue.shows.map(showDivTemplate).join('')}
-            </ul>
+            let markup = `
+            <div class="venuePopup" style="max-height: 100px; overflow-y: scroll;">
+                <h5>${venue.name}</h5>
+                <ul>
+                ${venue.shows.map(showDivTemplate).join('')}
+                </ul>
             </div>
             `
-   
 
-            /// TEST
             venueMarker.bindPopup(markup);
 
             // Extend the marker bounds to include the new venue marker

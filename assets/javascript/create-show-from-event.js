@@ -9,7 +9,10 @@ const createShowFromEvent = (venues, event) => {
 	let venueName = event._embedded.venues[0].name;
 
 	let venue = venues.filter(venueInner => {
-		venueInner.name === venueName;
+		console.log(venueInner.name)
+		console.log(venueName)
+		console.log(venueInner.name === venueName)
+		return venueInner.name === venueName;
 	});
 	console.log(venue)
 	if (venue.length > 1) return;
@@ -31,17 +34,24 @@ const createShowFromEvent = (venues, event) => {
 				"US"
 			]
 		}
+		venues.push(v);
 		
 	} else {
 		v = venue[0];
 	}
 
+	let date = moment(event.dates.start.localDate, "YYYY-MM-DD").format('dddd, MMMM Do YYYY');
+	let time = moment(event.dates.start.localTime, "HH:mm:ss").format("h:mm a");
+	
+
 	v.shows.push({
 		time: event.dates.start.localTime,
 		date: event.dates.start.localDate,
+		displayDate: date,
+		displayTime: time,
 		artist: artist,
 		tmUrl: event.url
 	});
 	console.log(v);
-	venues.push(v);
+	
 }
