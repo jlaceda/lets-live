@@ -5,12 +5,21 @@ var artistSearchMod = {
     },
     addListeners: function () {
         $("#searchButton").click(function(event){
-           
+
             event.preventDefault();
-            let venueArrayPromise = artistSearchMod.search($("#searchInput").val());
-            $("#searchInput").val("");
+
+            let searchInput = $("#searchInput")
+            let artistName = searchInput.val().trim();
+            if (artistName.length === 0)
+            {
+                searchInput.attr('placeholder', 'Name Required');
+                return;
+            }
+            let venueArrayPromise = artistSearchMod.search(artistName);
             venueArrayPromise.then(map.createVenueMarkers);
             venueArrayPromise.then(createShowList);
+            searchInput.val("");
+            searchInput.attr('placeholder', 'Artist Search');
         });
 
 
