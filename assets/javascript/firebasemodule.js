@@ -5,7 +5,7 @@ var recentSearch = {
         if(firebaseModule.myObj && firebaseModule.myObj.favorites)
         {
             firebaseModule.myObj.favorites.forEach(fav => {
-                this.add(fav);
+                this.add(fav, true);
             });
         }
 
@@ -18,14 +18,22 @@ var recentSearch = {
 
     },
 
-    add: function(favToAdd)
+    add: function(favToAdd, reverse = false)
     {
         if(recentSearch.recSearch != undefined)
         {
-            if(this.recSearch.unshift(favToAdd) > 5)
+            if(reverse == true)
             {
-                this.recSearch.pop();
+                this.recSearch.push(favToAdd);
             }
+            else
+            {
+                if(this.recSearch.unshift(favToAdd) > 5)
+                {
+                    this.recSearch.pop();
+                }
+            }
+            
             
             this.updateFirebase();
         }
@@ -33,6 +41,7 @@ var recentSearch = {
         {
             this.recSearch = [favToAdd];
         }
+        this.draw();
     },
 
     remove: function(favToRemove)
@@ -50,10 +59,10 @@ var recentSearch = {
     draw: function()
     {
         let i = 0;
-        $("#favList").empty();
+        $("#recList").empty();
         this.recSearch.forEach(fav =>
         {
-            $("#favList").append("<a href=\"#\">" + i++ + ": " + fav + "</a>")
+            $("#recList").append("<a href=\"#\">" + i++ + ": " + fav + "</a>")
         })
     },
 
