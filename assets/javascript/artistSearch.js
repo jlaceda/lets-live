@@ -1,10 +1,19 @@
 "use strict";
 var artistSearchMod = {
     init: function () {
-
+        this.addListeners();
+    },
+    addListeners: function () {
+        $("#searchButton").click(function(event){
+           
+            event.preventDefault();
+            console.log($("#searchInput").val());
+            artistSearchMod.search($("#searchInput").val());
+            $("#searchInput").val("");
+        });
     },
 
-    search(artist) {
+    search: function (artist) {
         const TICKETMASTER_API_KEY = `iYNITBvIAGCRrEmnvVY1ugT1EPxdLE4l`;
         const eventSearchRequestUrl = [
             `https://app.ticketmaster.com/discovery/v2/events?apikey=${TICKETMASTER_API_KEY}`,
@@ -42,10 +51,12 @@ var artistSearchMod = {
                         artist: artist
                     });
                 });
+                console.log(shows);
                 return new Promise(resolve => resolve(shows))
             })
             .catch(error => console.error(error));
     }
 }
 artistSearchMod.init();
+
 //console.log(artistSearchMod.search(""));

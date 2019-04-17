@@ -49,26 +49,18 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <!-- trending -->
-                    <li class="nav-item dropdown">
-                        <button class="trendingBtn">Trending</button>
-                        <div id="trendingList" class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a href="#">Example 1</a>
-                            <a href="#">Example 2</a>
-                            <a href="#">Example 3</a>
-                        </div>
-                    </li>
 
                     <!-- favorites -->
                     <li class="nav-item dropdown">
-                        <button class="favBtn">Favorites</button>
-                        <div id="favList" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <button class="favBtn">Recent Searches</button>
+                        <div id="recList" class="dropdown-menu" aria-labelledby="navbarDropdown">
                         </div>
                     </li>
                 </ul>
                 <!-- search -->
                 <form class="form-inline">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Band Search" aria-label="Search">
-                    <button class="btn searchBtn" type="submit"><i class="fas fa-search"></i></button>
+                    <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Band Search" aria-label="Search">
+                    <button class="btn searchBtn" id="searchButton"><i class="fas fa-search"></i></button>
                 </form>
 
             </div>
