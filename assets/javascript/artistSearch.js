@@ -19,7 +19,7 @@ var artistSearchMod = {
             }
             throw new Error("Something went wrong on api server!");
         };
-
+        recentSearch.add(artist);
         return fetch(eventSearchRequest)
             // handle non-200 status
             .then(filterRawResponse)
@@ -48,4 +48,4 @@ var artistSearchMod = {
     }
 }
 artistSearchMod.init();
-console.log(artistSearchMod.search(""));
+//console.log(artistSearchMod.search(""));
