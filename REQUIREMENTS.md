@@ -1,27 +1,27 @@
 # Coding Requirements
-- [ ] Must use at least two APIs
-    * Song Kick - to get information about venues and artists
-    * OpenCage Data - to get location data (lat/lon) from a venue name
+- [X] Must use at least two APIs
+    * Ticketmaster - to get information about venues and artists
+    * OpenCage Data - to get location data (lat/lon) from a venue name (not used in mvp)
     * Leaflet - to display the map in the browser
-- [ ] Must use AJAX to pull data
-- [ ] Must utilize at least one new library or technology that we haven’t discussed
+- [X] Must use AJAX to pull data
+- [X] Must utilize at least one new library or technology that we haven’t discussed
     - this is come up naturaly based on features required
-- [ ] Must have a polished frontend / UI 
-- [ ] Must meet good quality coding standards (indentation, scoping, naming)
-- [ ] Must NOT use alerts, confirms, or prompts (look into modals!)
+- [X] Must have a polished frontend / UI 
+- [X] Must meet good quality coding standards (indentation, scoping, naming)
+- [X] Must NOT use alerts, confirms, or prompts (look into modals!)
     - does bootstrap/jquery have modals?
-- [ ] Must have some sort of repeating element (table, columns, etc)
-- [ ] Must use Bootstrap or Alternative CSS Framework
+- [X] Must have some sort of repeating element (table, columns, etc)
+- [X] Must use Bootstrap or Alternative CSS Framework
     - are the alternatives better than BS?
-- [ ] Must be Deployed (Github Pages)
-- [ ] Must have User Input Validation 
+- [X] Must be Deployed (Github Pages)
+- [X] Must have User Input Validation 
     - `required` attr in inputs
     - semantic input types
     - probably a js library to do this (jquery?)
 
 ## Nice to have
 - [ ] Utilize Firebase for Persistent Data Storage (Consider this basically a requirement).
-- [ ] Mobile Responsive 
+- [X] Mobile Responsive 
     - bootstrap does this automatically
 - [ ] Use an alternative CSS framework like Materialize
     - just don't!
