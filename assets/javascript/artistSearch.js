@@ -5,11 +5,18 @@ var artistSearchMod = {
     },
     addListeners: function () {
         $("#searchButton").click(function(event){
-           
+
             event.preventDefault();
-            console.log($("#searchInput").val());
-            artistSearchMod.search($("#searchInput").val());
-            $("#searchInput").val("");
+            let searchInput = $("#searchInput")
+            let artistName = searchInput.val().trim();
+            if (artistName.length === 0)
+            {
+                searchInput.attr('placeholder', 'Name Required');
+                return;
+            }
+            artistSearchMod.search(artistName);
+            searchInput.val("");
+            searchInput.attr('placeholder', 'Artist Search');
         });
 
 
