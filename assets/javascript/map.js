@@ -52,7 +52,35 @@ let map = {
                         venues[i].artist + "<br>" +
                         venues[i].date + "<br>" +
                         venues[i].time + "<br>";
-            venueMarker.bindPopup(popup);
+
+            /// TEST
+            const showDivTemplate = show =>`
+            <li>
+                <div class="show p-2 m-1" style="background-color:rgba(0,0,0,0.5)">
+                    <h3>${show.artist}</h3> 
+                    <h5>${show.date} ${show.time}</h5>
+                    <p><a href="${show.tmUrl}" target="_blank">Tickets</a></p>
+                </div>
+            </li>
+            `;
+            
+            // TODO: better markup
+            let markup = '';
+            // construct html for list
+            
+            const venue = venues[i];
+            markup += `
+            <div class="venue p-2 m-1" style="background-color:rgba(0,0,0,0.5)">
+            <h2>${venue.name}</h2>
+            <ul>
+            ${venue.shows.map(showDivTemplate).join('')}
+            </ul>
+            </div>
+            `
+   
+
+            /// TEST
+            venueMarker.bindPopup(markup);
 
             // Extend the marker bounds to include the new venue marker
             map.markerBounds.extend(venueMarker.getLatLng());
