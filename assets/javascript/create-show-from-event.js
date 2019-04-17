@@ -16,7 +16,7 @@ const createShowFromEvent = (venues, event) => {
 	if (venue.length === 0) {
 		// create a venue
 		v = {
-			name: event._embedded.venues[0].name,
+			name: (event._embedded.venues[0].name === undefined) ? '' : event._embedded.venues[0].name,
 			shows: []
 		};
 
@@ -32,14 +32,13 @@ const createShowFromEvent = (venues, event) => {
 			v.lat = event._embedded.venues[0].location.latitude;
 		}
 
-		if (event._embedded.venues[0].country.countryCode === "US") {
-			v.address = [
-				event._embedded.venues[0].address.line1,
-				event._embedded.venues[0].city.name,
-				event._embedded.venues[0].state.stateCode,
-				"US"
-			]
-		}
+		v.address = [
+			(event._embedded.venues[0].address === undefined) ? '' : event._embedded.venues[0].address.line1,
+			(event._embedded.venues[0].city === undefined) ? '' : event._embedded.venues[0].city.name,
+			(event._embedded.venues[0].state === undefined) ? '' : event._embedded.venues[0].state.stateCode,
+			(event._embedded.venues[0].country === undefined) ? '' : event._embedded.venues[0].country.countryCode
+		]
+		
 		venues.push(v);
 		
 	} else {
