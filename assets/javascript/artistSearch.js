@@ -51,7 +51,6 @@ var artistSearchMod = {
                 }
                 let venues = [];
                 const events = response._embedded.events;
-                console.log(events);
                 events.forEach(event => {
                     createShowFromEvent(venues, event);
                 });
@@ -61,5 +60,3 @@ var artistSearchMod = {
     }
 }
 artistSearchMod.init();
-
-//console.log(artistSearchMod.search(""));

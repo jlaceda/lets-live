@@ -22,8 +22,7 @@ const createShowFromEvent = (venues, event) => {
 
 		if (event._embedded.venues[0].location === undefined)
 		{
-			console.log("venue doesn't have lat long");
-			// TODO: Do a GPS look up from the address
+			// TODO: Do a GPS look up from the address (OpenCage Data)
 			// for now just 30 30
 			v.lng = 30;
 			v.lat = 30;

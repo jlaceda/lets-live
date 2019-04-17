@@ -58,7 +58,6 @@ var recentSearch = {
 
     draw: function()
     {
-        let i = 0;
         $("#recList").empty();
         this.recSearch.forEach(fav =>
         {
@@ -67,7 +66,6 @@ var recentSearch = {
         })
         $(".recentSearch").click(function(event){
             event.preventDefault();
-            console.log($(this));
             artistSearchMod.search($(this).attr("value"));
         });
     },

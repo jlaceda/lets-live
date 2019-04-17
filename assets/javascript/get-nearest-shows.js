@@ -59,8 +59,3 @@ const getNearestShows = (() => {
 			.catch(error => console.error(error));
 	};
 })();
-
-// // USAGE EXAMPLE with Convention Center lat lng
-// getNearestShows(47.6114813,-122.3373179)
-// 	.then(shows => console.log(shows))
-// 	.catch(error => console.error(error));
