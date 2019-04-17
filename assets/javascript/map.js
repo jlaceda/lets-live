@@ -47,12 +47,30 @@ let map = {
             // console.log(`lat: ${venues[i].lat}\tlng: ${venues[i].lng}`)
             let venueMarker = L.marker([venues[i].lat, venues[i].lng], {icon: map.ticketIcon}).addTo(map.display);
 
-            // Create popup
-            let popup = venues[i].name + "<br>" +
-                        venues[i].artist + "<br>" +
-                        venues[i].date + "<br>" +
-                        venues[i].time + "<br>";
-            venueMarker.bindPopup(popup);
+            /// popup
+            const showDivTemplate = show =>`
+            <li>
+                <div class="showPopup p-1">
+                    <h6>${show.artist}</h6> 
+                    <p>${show.displayDate}<br>
+                    ${show.displayTime}<br>
+                    <a href="${show.tmUrl}" target="_blank">Tickets</a></p>
+                </div>
+            </li>
+            `;
+
+            // construct html for list
+            const venue = venues[i];
+            let markup = `
+            <div class="venuePopup" style="max-height: 100px; overflow-y: scroll;">
+                <h5>${venue.name}</h5>
+                <ul>
+                ${venue.shows.map(showDivTemplate).join('')}
+                </ul>
+            </div>
+            `
+
+            venueMarker.bindPopup(markup);
 
             // Extend the marker bounds to include the new venue marker
             map.markerBounds.extend(venueMarker.getLatLng());

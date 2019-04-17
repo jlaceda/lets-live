@@ -49,24 +49,12 @@ const getNearestShows = (() => {
 					// what TODO when theres no shows?
 					throw new Error("No shows near you!");
 				}
+				let venues = [];
 				const events = response._embedded.events;
-				let shows = [];
 				events.forEach(event => {
-					// only looks at the first artist right now
-					// substitutes the event name if there's no attractions
-					// TODO: maybe look at the openers also?
-					let artist = (event._embedded.attractions === undefined) ?
-						event.name : event._embedded.attractions[0].name;
-					shows.push({
-						name: event._embedded.venues[0].name,
-						lng: event._embedded.venues[0].location.longitude,
-						lat: event._embedded.venues[0].location.latitude,
-						time: event.dates.start.localTime,
-						date: event.dates.start.localDate,
-						artist: artist
-					});
+					createShowFromEvent(venues, event);
 				});
-				return new Promise(resolve => resolve(shows))
+				return new Promise(resolve => resolve(venues))
 			})
 			.catch(error => console.error(error));
 	};
