@@ -18,7 +18,7 @@ const getNearestShows = (() => {
 		let startMonth = now.format('MM');
 		let startDay = now.format('DD');
 		let startTime = now.format('hh:mm:ss');
-		
+
 		const tomorrow = moment().add(2, 'days').endOf('day');
 		let endYear = tomorrow.format('YYYY');
 		let endMonth = tomorrow.format('MM');
