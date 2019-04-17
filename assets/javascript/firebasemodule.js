@@ -62,7 +62,7 @@ var recentSearch = {
         $("#recList").empty();
         this.recSearch.forEach(fav =>
         {
-            $("#recList").append("<a class=\"recentSearch\" value=" + fav + " href=\"#\">" + i++ + ": " + fav + "</a>")
+            $("#recList").append("<a class=\"recentSearch\" value=" + fav + " href=\"#\">" + fav + "</a>")
 
         })
         $(".recentSearch").click(function(event){
