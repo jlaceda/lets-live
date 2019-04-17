@@ -7,9 +7,10 @@ var artistSearchMod = {
         $("#searchButton").click(function(event){
            
             event.preventDefault();
-            console.log($("#searchInput").val());
-            artistSearchMod.search($("#searchInput").val());
+            let venueArrayPromise = artistSearchMod.search($("#searchInput").val());
             $("#searchInput").val("");
+            venueArrayPromise.then(map.createVenueMarkers);
+            venueArrayPromise.then(createShowList);
         });
 
 
@@ -41,6 +42,7 @@ var artistSearchMod = {
                 }
                 let venues = [];
                 const events = response._embedded.events;
+                console.log(events);
                 events.forEach(event => {
                     createShowFromEvent(venues, event);
                 });
