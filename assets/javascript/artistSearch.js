@@ -5,53 +5,20 @@ var artistSearchMod = {
     },
 
     search(artist) {
-
-    }
-};
-
-
-/** This function returns an array of shows from the area of given lat, lng */
-const getNearestShows = (() => {
-    const TICKETMASTER_API_KEY = `iYNITBvIAGCRrEmnvVY1ugT1EPxdLE4l`;
-
-    const filterRawResponse = (rawResponse) => {
-        if (rawResponse.status === 200) {
-            return rawResponse.json();
-        }
-        throw new Error("Something went wrong on api server!");
-    };
-
-    const buildlocalStartDateTimeString = () => {
-        // goal: 
-        //		2019-04-11T00:00:00,2019-04-12T00:00:00
-        // or use wildcard:
-        //		*,2019-04-12T00:00:00
-        //
-        // TODO: this has problems at the end of months/years,
-        // probably should bring in moment.js for this
-        const now = new Date();
-
-        let year = now.getFullYear();
-        let day = now.getDate() + 1;
-        let month = now.getMonth() + 1;
-
-        day = (day < 10) ? "0" + day : day;
-        month = (month < 10) ? "0" + month : month;
-
-        return `*,${year}-${month}-${day}T00:00:00`;
-    };
-
-    return (lat, lng) => {
+        const TICKETMASTER_API_KEY = `iYNITBvIAGCRrEmnvVY1ugT1EPxdLE4l`;
         const eventSearchRequestUrl = [
             `https://app.ticketmaster.com/discovery/v2/events?apikey=${TICKETMASTER_API_KEY}`,
-            `keyword=`,
-            `localStartDateTime=${buildlocalStartDateTimeString()}`,
-            `unit=miles`,
-            `sort=date,asc`,
-            `countryCode=US`,
+            `keyword=` + artist,
             `segmentName=Music`].join('&');
 
         const eventSearchRequest = new Request(eventSearchRequestUrl);
+
+        const filterRawResponse = (rawResponse) => {
+            if (rawResponse.status === 200) {
+                return rawResponse.json();
+            }
+            throw new Error("Something went wrong on api server!");
+        };
 
         return fetch(eventSearchRequest)
             // handle non-200 status
@@ -64,9 +31,6 @@ const getNearestShows = (() => {
                 const events = response._embedded.events;
                 let shows = [];
                 events.forEach(event => {
-                    // only looks at the first artist right now
-                    // substitutes the event name if there's no attractions
-                    // TODO: maybe look at the openers also?
                     let artist = (event._embedded.attractions === undefined) ?
                         event.name : event._embedded.attractions[0].name;
                     shows.push({
@@ -81,5 +45,7 @@ const getNearestShows = (() => {
                 return new Promise(resolve => resolve(shows))
             })
             .catch(error => console.error(error));
-    };
-})();
+    }
+}
+artistSearchMod.init();
+console.log(artistSearchMod.search(""));
