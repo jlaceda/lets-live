@@ -18,7 +18,7 @@ const getNearestShows = (() => {
 		let startMonth = now.format('MM');
 		let startDay = now.format('DD');
 		let startTime = now.format('hh:mm:ss');
-		
+
 		const tomorrow = moment().add(2, 'days').endOf('day');
 		let endYear = tomorrow.format('YYYY');
 		let endMonth = tomorrow.format('MM');
@@ -46,7 +46,7 @@ const getNearestShows = (() => {
 			.then(filterRawResponse)
 			.then((response) => {
 				if (response.page.totalElements == 0) {
-					// what TODO when theres no shows?
+					noShowsNearby();
 					throw new Error("No shows near you!");
 				}
 				let venues = [];

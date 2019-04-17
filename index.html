@@ -22,9 +22,13 @@
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
         integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
         crossorigin=""></script>
+
     <!-- style css -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <title>Band Search</title>
+   
+    <!-- logo -->
+    <link rel="shortcut icon" href="assets/images/mic.png" />
+    <title>Let's Live</title>
 </head>
 
 <body>
@@ -38,8 +42,8 @@
     <div id="main_content">
         <!-- navbar -->
         <nav class="navbar navbar-expand-lg fixed-top">
-            <!-- *we will change name as we decide... -->
-            <a class="navbar-brand" href="#">Band Search</a>
+            <!-- app name -->
+            <a class="navbar-brand" href="#">Let's Live  <img id = "logo" src="assets/images/mic.png" alt="Let's Live"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -47,11 +51,9 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
-                    <!-- trending -->
-
-                    <!-- favorites -->
+                    <!-- recent searches-->
                     <li class="nav-item dropdown">
-                        <button class="favBtn">Recent Searches</button>
+                        <button class="recBtn">Recent Searches</button>
                         <div id="recList" class="dropdown-menu" aria-labelledby="navbarDropdown">
                         </div>
                     </li>
@@ -101,6 +103,8 @@
 
             <!-- Moment.js  -->
             <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
+            <script src="assets/javascript/no-shows-nearby.js"></script>
             <script src="assets/javascript/create-show-from-event.js"></script>
             <script src="assets/javascript/get-nearest-shows.js"></script>
             <!-- Map JS -->
