@@ -3,5 +3,5 @@
 const noShowsNearby = () =>
 {
 	let listDiv = document.getElementById("list");
-	listDiv.innerHTML = 'No shows nearby :(';
+	listDiv.innerHTML = '<h1>No shows nearby :(</h1>';
 }
