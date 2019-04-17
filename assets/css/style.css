@@ -220,3 +220,13 @@ input{
         display:block;
     }
 }
+
+.venuePopup > h5,
+.showPopup > h6,
+.showPopup > p {
+    margin:0;
+}
+
+.leaflet-popup-content p {
+    margin:0;
+}
