@@ -46,7 +46,7 @@ const getNearestShows = (() => {
 			.then(filterRawResponse)
 			.then((response) => {
 				if (response.page.totalElements == 0) {
-					// what TODO when theres no shows?
+					noShowsNearby();
 					throw new Error("No shows near you!");
 				}
 				let venues = [];
