@@ -9,8 +9,8 @@ Let's Live will help you!
 This app will find live shows that's happening near you and those of your artist using Ticketmaster api  and locate them on the map using Leaflet api. 
 
 ## Installation
-- Go to https://jlaceda.github.io/group-project-1/
-or download from https://github.com/jlaceda/group-project-1
+- Go to https://jlaceda.github.io/lets-live/
+or download from https://github.com/jlaceda/lets-live
 
 ## Usage
 - Once you load the app, it will automatically recognize your location, and locate all the shows that's happening tonight on the map and list. 
