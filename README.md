@@ -1,11 +1,11 @@
 
 # README 
 
-## Name????
+## Let's Live
 
 ## Description
 - If you are a fan of live music and looking for something to do tonight, where do you go?
-    ??? will help you! This app will find live shows that's happening near you using ticektmaster api  and locate them on the map using leaflet api.
+    Let's Live will help you! This app will find live shows that's happening near you using Ticketmaster api  and locate them on the map using Leaflet api.
     ....
     ....
 

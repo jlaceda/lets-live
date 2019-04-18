@@ -63,7 +63,6 @@ let map = {
 
         // Create a marker with a popup for each venue
         for (let i = 0; i < venues.length; i++) {
-            // console.log(`lat: ${venues[i].lat}\tlng: ${venues[i].lng}`)
             let venueMarker = L.marker([venues[i].lat, venues[i].lng], {icon: map.ticketIcon}).addTo(map.display);
 
             map.venueMarkerArray.push({
