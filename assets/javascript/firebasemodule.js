@@ -68,7 +68,7 @@ var recentSearch = {
         $(".recentSearch").click(function(event){
             event.preventDefault();
             console.log($(this));
-            artistSearchMod.search($(this).attr("value"));
+            artistSearchMod.search($(this).attr("value"), false);
         });
     },
 
@@ -120,10 +120,10 @@ let firebaseModule = {
     initUser: function()
     {
         function getCookie(cname) {
-            var name = cname + "=";
-            var ca = document.cookie.split(';');
+            let name = cname + "=";
+            let ca = document.cookie.split(';');
             for(var i = 0; i < ca.length; i++) {
-              var c = ca[i];
+              let c = ca[i];
               while (c.charAt(0) == ' ') {
                 c = c.substring(1);
               }
