@@ -25,7 +25,7 @@ var artistSearchMod = {
 
     },
 
-    search: function (artist) {
+    search: function (artist, b = true) {
         const TICKETMASTER_API_KEY = `iYNITBvIAGCRrEmnvVY1ugT1EPxdLE4l`;
         const eventSearchRequestUrl = [
             `https://app.ticketmaster.com/discovery/v2/events?apikey=${TICKETMASTER_API_KEY}`,
@@ -40,7 +40,11 @@ var artistSearchMod = {
             }
             throw new Error("Something went wrong on api server!");
         };
-        recentSearch.add(artist);
+        if (b === true)
+        {
+            recentSearch.add(artist);
+        }
+        
         return fetch(eventSearchRequest)
             // handle non-200 status
             .then(filterRawResponse)

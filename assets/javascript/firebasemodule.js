@@ -66,7 +66,7 @@ var recentSearch = {
         })
         $(".recentSearch").click(function(event){
             event.preventDefault();
-            artistSearchMod.search($(this).attr("value"));
+            artistSearchMod.search($(this).attr("value"),false);
         });
     },
 
