@@ -58,7 +58,6 @@ var recentSearch = {
 
     draw: function()
     {
-        let i = 0;
         $("#recList").empty();
         this.recSearch.forEach(fav =>
         {

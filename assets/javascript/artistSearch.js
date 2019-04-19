@@ -5,11 +5,21 @@ var artistSearchMod = {
     },
     addListeners: function () {
         $("#searchButton").click(function(event){
-           
+
             event.preventDefault();
-            console.log($("#searchInput").val());
-            artistSearchMod.search($("#searchInput").val());
-            $("#searchInput").val("");
+
+            let searchInput = $("#searchInput")
+            let artistName = searchInput.val().trim();
+            if (artistName.length === 0)
+            {
+                searchInput.attr('placeholder', 'Name Required');
+                return;
+            }
+            let venueArrayPromise = artistSearchMod.search(artistName);
+            venueArrayPromise.then(map.createVenueMarkers);
+            venueArrayPromise.then(createShowList);
+            searchInput.val("");
+            searchInput.attr('placeholder', 'Artist Search');
         });
 
 
@@ -40,29 +50,17 @@ var artistSearchMod = {
             .then(filterRawResponse)
             .then((response) => {
                 if (response.page.totalElements == 0) {
-                    // what TODO when theres no shows?
+                    noShowsNearby();
                     throw new Error("No shows near you!");
                 }
+                let venues = [];
                 const events = response._embedded.events;
-                let shows = [];
                 events.forEach(event => {
-                    let artist = (event._embedded.attractions === undefined) ?
-                        event.name : event._embedded.attractions[0].name;
-                    shows.push({
-                        name: event._embedded.venues[0].name,
-                        lng: event._embedded.venues[0].location.longitude,
-                        lat: event._embedded.venues[0].location.latitude,
-                        time: event.dates.start.localTime,
-                        date: event.dates.start.localDate,
-                        artist: artist
-                    });
+                    createShowFromEvent(venues, event);
                 });
-                console.log(shows);
-                return new Promise(resolve => resolve(shows))
+                return new Promise(resolve => resolve(venues))
             })
             .catch(error => console.error(error));
     }
 }
 artistSearchMod.init();
-
-//console.log(artistSearchMod.search(""));

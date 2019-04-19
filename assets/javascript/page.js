@@ -15,3 +15,8 @@ $("#up").on('click', function (event) {
     $("#up").hide();
     $("#down").show();
 });
+
+// go back to first page when clicked
+$(".navbar-brand").on("click",function(event){
+    window.location.reload();
+})

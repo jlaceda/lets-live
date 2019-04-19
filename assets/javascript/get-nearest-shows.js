@@ -18,7 +18,7 @@ const getNearestShows = (() => {
 		let startMonth = now.format('MM');
 		let startDay = now.format('DD');
 		let startTime = now.format('hh:mm:ss');
-		
+
 		const tomorrow = moment().add(2, 'days').endOf('day');
 		let endYear = tomorrow.format('YYYY');
 		let endMonth = tomorrow.format('MM');
@@ -46,33 +46,16 @@ const getNearestShows = (() => {
 			.then(filterRawResponse)
 			.then((response) => {
 				if (response.page.totalElements == 0) {
-					// what TODO when theres no shows?
+					noShowsNearby();
 					throw new Error("No shows near you!");
 				}
+				let venues = [];
 				const events = response._embedded.events;
-				let shows = [];
 				events.forEach(event => {
-					// only looks at the first artist right now
-					// substitutes the event name if there's no attractions
-					// TODO: maybe look at the openers also?
-					let artist = (event._embedded.attractions === undefined) ?
-						event.name : event._embedded.attractions[0].name;
-					shows.push({
-						name: event._embedded.venues[0].name,
-						lng: event._embedded.venues[0].location.longitude,
-						lat: event._embedded.venues[0].location.latitude,
-						time: event.dates.start.localTime,
-						date: event.dates.start.localDate,
-						artist: artist
-					});
+					createShowFromEvent(venues, event);
 				});
-				return new Promise(resolve => resolve(shows))
+				return new Promise(resolve => resolve(venues))
 			})
 			.catch(error => console.error(error));
 	};
 })();
-
-// // USAGE EXAMPLE with Convention Center lat lng
-// getNearestShows(47.6114813,-122.3373179)
-// 	.then(shows => console.log(shows))
-// 	.catch(error => console.error(error));
